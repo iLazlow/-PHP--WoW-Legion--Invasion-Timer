@@ -1,0 +1,168 @@
+/* Copyright 2016 iLazlow.de */
+html{
+	width: 100%;
+    height: 100%;
+}
+
+body{
+	color: white;
+	background: black;
+	font-family: "Arial";
+}
+
+.background{
+	width: 100%;
+	height: 500px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	
+	
+	background: #000;
+	display: flex;
+	align-items: flex-end;
+	background: url("../img/background.jpg");
+	background-size: cover;
+	background-position: 0 28%;
+	
+	z-index: -10;
+}
+
+.box{
+	background: white;
+	margin-top: 40px;
+	border-radius: 2px;
+	color: #303030;
+	text-align: center;
+	padding: 0px;
+	margin-bottom: 40px;
+}
+
+.active{
+	margin-top: 0px;
+	border-top: 6px solid #2196f3;
+	box-shadow: 0 1px 12px rgba(0,0,0,0.5);
+	border-radius: 2px;
+}
+
+.realm-bg{
+	width: 100%;
+	font-size: 36px;
+	line-height: 90px;
+	font-weight: 300;
+	background: #f0f0f0;
+	border-bottom: 1px solid #ddd;
+}
+
+.invasion-timer{
+	max-width: 320px;
+	margin: 0 auto;
+}
+
+.invasion-status{
+	color: #d32f2f;
+	font-weight: 300;
+	font-size: 20px;
+	margin: 25px 0;
+}
+
+.invasion-counter span{
+	font-size: 56px;
+	line-height: 60px;
+}
+
+.invasion-counter p{
+	color: #aaa;
+	font-size: 14px;
+	padding: 0 4px;
+	box-sizing: border-box;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.invasion-hours{
+	float: left;
+	width: 33%
+}
+
+.invasion-minutes{
+	float: left;
+	width: 33%
+}
+
+.invasion-seconds{
+	float: left;
+	width: 33%
+}
+
+.invasion-date{
+	margin-top: 15px;
+	color: #666;
+	font-size: 20px;
+	font-weight: 400;
+	margin-bottom: 18px;
+}
+
+.invasion-plan{
+	border-top: 4px solid #ddd;
+	padding: 0 20px;
+	margin-bottom: 30px;
+	padding-bottom: 30px;
+}
+
+.invasion-plan-title{
+	font-weight: 300;
+	margin: 25px 0;
+	font-size: 20px;
+}
+
+table{
+	width: 100%;
+}
+
+table td{
+	text-align: right;
+	padding: 3px 6px;
+	font-size: 13px;
+	width: 50%;
+	border-right: 1px solid #ddd;
+}
+
+table td:last-child {
+    text-align: left;
+    border-right: 0;
+}
+
+#invasion-zone-us{
+	font-size: 32px;
+}
+
+#invasion-zone-eu{
+	font-size: 32px;
+}
+
+#invasion-zone-ozean{
+	font-size: 32px;
+}
+
+.wow-token{
+	background: #333;
+	color: white;
+	padding: 10px;
+	font-size: 18px;
+	border-bottom: 1px solid #000;
+}
+
+.token-collapse{
+	background: #333;
+	color: white;
+	font-size: 20px;
+	border-bottom: 1px solid #000;
+	cursor: pointer;
+}
+
+.footer{
+	color: white;
+	text-align: center;
+	margin-bottom: 40px;
+}

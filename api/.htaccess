@@ -1,0 +1,8 @@
+## Rewrite
+RewriteEngine On
+
+##API Endpoints Rewrite
+
+##Invasion
+RewriteRule ^invasion/(.+)/$ index.php?realm=$1 [L]
+RewriteRule ^invasion/(.+)$ index.php?realm=$1 [L]
