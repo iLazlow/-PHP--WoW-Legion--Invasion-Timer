@@ -161,14 +161,16 @@ while($weekCount <= 7){
 	
 }
 
+
+
 if(strtolower($_GET["token"]) == "true"){
 	include("../config.php");
 
 	$prices = array();
 
 	//US
-	$usTokenRefreshDate = date("d.m.Y", $usTokenAPI["last_updated"]);
-	$usTokenRefreshTime = date("H:i", $usTokenAPI["last_updated"]);
+	$usTokenRefreshDate = date("d.m.Y", $usTokenAPI["last_updated_timestamp"]/1000);
+	$usTokenRefreshTime = date("H:i", $usTokenAPI["last_updated_timestamp"]/1000);
 	$usPrice = array(
 		'token_zone' => "US",
 		'last_updated' => $usTokenRefreshDate." ".$usTokenRefreshTime,
@@ -177,8 +179,8 @@ if(strtolower($_GET["token"]) == "true"){
 	$prices[] = $usPrice;
 
 	//EU
-	$euTokenRefreshDate = date("d.m.Y", $euTokenAPI["last_updated"]);
-	$euTokenRefreshTime = date("H:i", $euTokenAPI["last_updated"]);
+	$euTokenRefreshDate = date("d.m.Y", $euTokenAPI["last_updated_timestamp"]/1000);
+	$euTokenRefreshTime = date("H:i", $euTokenAPI["last_updated_timestamp"]/1000);
 	$euPrice = array(
 		'token_zone' => "EU",
 		'last_updated' => $euTokenRefreshDate." ".$euTokenRefreshTime,
@@ -197,8 +199,8 @@ if(strtolower($_GET["token"]) == "true"){
 	$prices[] = $cnPrice;
 
 	//KR
-	$krTokenRefreshDate = date("d.m.Y", $krTokenAPI["last_updated"]);
-	$krTokenRefreshTime = date("H:i", $krTokenAPI["last_updated"]);
+	$krTokenRefreshDate = date("d.m.Y", $krTokenAPI["last_updated_timestamp"]/1000);
+	$krTokenRefreshTime = date("H:i", $krTokenAPI["last_updated_timestamp"]/1000);
 	$krPrice = array(
 		'token_zone' => "KR",
 		'last_updated' => $krTokenRefreshDate." ".$krTokenRefreshTime,
@@ -207,8 +209,8 @@ if(strtolower($_GET["token"]) == "true"){
 	$prices[] = $krPrice;
 
 	//TW
-	$twTokenRefreshDate = date("d.m.Y", $twTokenAPI["last_updated"]);
-	$twTokenRefreshTime = date("H:i", $twTokenAPI["last_updated"]);
+	$twTokenRefreshDate = date("d.m.Y", $twTokenAPI["last_updated_timestamp"]/1000);
+	$twTokenRefreshTime = date("H:i", $twTokenAPI["last_updated_timestamp"]/1000);
 	$twPrice = array(
 		'token_zone' => "TW",
 		'last_updated' => $twTokenRefreshDate." ".$twTokenRefreshTime,
