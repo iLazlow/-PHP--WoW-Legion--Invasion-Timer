@@ -6,3 +6,5 @@ RewriteEngine On
 ##Invasion
 RewriteRule ^invasion/(.+)/$ index.php?realm=$1 [L]
 RewriteRule ^invasion/(.+)$ index.php?realm=$1 [L]
+RewriteRule ^token/$ index.php?token=true [L]
+RewriteRule ^token$ index.php?token=true [L]

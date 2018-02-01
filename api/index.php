@@ -161,6 +161,68 @@ while($weekCount <= 7){
 	
 }
 
-$arr = array("time" => time(), "invasions" => $responses);
+if(strtolower($_GET["token"]) == "true"){
+	include("../config.php");
+
+	$prices = array();
+
+	//US
+	$usTokenRefreshDate = date("d.m.Y", $usTokenAPI["last_updated"]);
+	$usTokenRefreshTime = date("H:i", $usTokenAPI["last_updated"]);
+	$usPrice = array(
+		'token_zone' => "US",
+		'last_updated' => $usTokenRefreshDate." ".$usTokenRefreshTime,
+		'price' => strval(@(number_format($usTokenAPI["price"] / 100 / 100, 0, ',','.')))
+	);
+	$prices[] = $usPrice;
+
+	//EU
+	$euTokenRefreshDate = date("d.m.Y", $euTokenAPI["last_updated"]);
+	$euTokenRefreshTime = date("H:i", $euTokenAPI["last_updated"]);
+	$euPrice = array(
+		'token_zone' => "EU",
+		'last_updated' => $euTokenRefreshDate." ".$euTokenRefreshTime,
+		'price' => strval(@(number_format($euTokenAPI["price"] / 100 / 100, 0, ',','.')))
+	);
+	$prices[] = $euPrice;
+
+	//CN
+	$cnTokenRefreshDate = date("d.m.Y", $cnTokenAPI["CN"]["timestamp"]);
+	$cnTokenRefreshTime = date("H:i", $cnTokenAPI["CN"]["timestamp"]);
+	$cnPrice = array(
+		'token_zone' => "CN",
+		'last_updated' => $cnTokenRefreshDate." ".$cnTokenRefreshTime,
+		'price' => strval(@(number_format($cnTokenAPI["CN"]["raw"]["buy"], 0, ',','.')))
+	);
+	$prices[] = $cnPrice;
+
+	//KR
+	$krTokenRefreshDate = date("d.m.Y", $krTokenAPI["last_updated"]);
+	$krTokenRefreshTime = date("H:i", $krTokenAPI["last_updated"]);
+	$krPrice = array(
+		'token_zone' => "KR",
+		'last_updated' => $krTokenRefreshDate." ".$krTokenRefreshTime,
+		'price' => strval(@(number_format($krTokenAPI["price"] / 100 / 100, 0, ',','.')))
+	);
+	$prices[] = $krPrice;
+
+	//TW
+	$twTokenRefreshDate = date("d.m.Y", $twTokenAPI["last_updated"]);
+	$twTokenRefreshTime = date("H:i", $twTokenAPI["last_updated"]);
+	$twPrice = array(
+		'token_zone' => "TW",
+		'last_updated' => $twTokenRefreshDate." ".$twTokenRefreshTime,
+		'price' => strval(@(number_format($twTokenAPI["price"] / 100 / 100, 0, ',','.')))
+	);
+	$prices[] = $twPrice;
+}else{
+	$prices[] = array(
+		'token_zone' => "NONE",
+		'last_updated' => "00.00.0000 00:00",
+		'price' => 0
+	);
+}
+
+$arr = array("time" => time(), "invasions" => $responses, "token" => $prices);
 echo json_encode($arr, JSON_UNESCAPED_UNICODE);
 ?>

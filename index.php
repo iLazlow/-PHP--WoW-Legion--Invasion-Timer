@@ -1,37 +1,6 @@
 <?php
-$arrContextOptions=array(
-    "ssl"=>array(
-        "verify_peer"=>false,
-        "verify_peer_name"=>false,
-    ),
-);
-
-$apiLink = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/api";
-
-//Get your api access token on https://dev.battle.net/
-$EU_API_ACCESS_TOKEN = "YOUR_TOKEN";
-$US_API_ACCESS_TOKEN = "YOUR_TOKEN";
-$KR_API_ACCESS_TOKEN = "YOUR_TOKEN";
-$TW_API_ACCESS_TOKEN = "YOUR_TOKEN";
-
-$euTokenURL = "https://eu.api.battle.net/data/wow/token/?namespace=dynamic-eu&locale=de_DE&access_token=$EU_API_ACCESS_TOKEN";
-$euTokenAPI = json_decode(file_get_contents($euTokenURL, false, stream_context_create($arrContextOptions)), true);
-
-$usTokenURL = "https://us.api.battle.net/data/wow/token/?namespace=dynamic-us&locale=en_US&access_token=$US_API_ACCESS_TOKEN";
-$usTokenAPI = json_decode(file_get_contents($usTokenURL, false, stream_context_create($arrContextOptions)), true);
-
-//Ocean
-$cnTokenURL = "https://data.wowtoken.info/snapshot.json";
-$cnTokenAPI = json_decode(file_get_contents($cnTokenURL, false, stream_context_create($arrContextOptions)), true);
-
-$krTokenURL = "https://kr.api.battle.net/data/wow/token/?namespace=dynamic-kr&locale=ko_KR&access_token=$KR_API_ACCESS_TOKEN";
-$krTokenAPI = json_decode(file_get_contents($krTokenURL, false, stream_context_create($arrContextOptions)), true);
-
-$twTokenURL = "https://tw.api.battle.net/data/wow/token/?namespace=dynamic-tw&locale=zh_TW&access_token=$TW_API_ACCESS_TOKEN";
-$twTokenAPI = json_decode(file_get_contents($twTokenURL, false, stream_context_create($arrContextOptions)), true);
-
+include("required.php");
 ?>
-
 <!DOCTYPE html>
 <html lang="de-DE">
 <head>
@@ -51,13 +20,6 @@ $twTokenAPI = json_decode(file_get_contents($twTokenURL, false, stream_context_c
 	<meta http-equiv="content-language" content="de">
 	<meta name="robots" content="index, follow">
 	<meta name="theme-color" content="#C9003A">
-	
-	<!-- Facebook META -->
-	<meta property="og:url" content="http://wow.iLazlow.de/" />
-	<meta property="og:type" content="website" />
-	<meta property="og:locale" content="de_DE" />
-	<meta property="og:title" content="Legion Invasion Timer" />
-	<meta property="og:description" content="Habe immer alle Legion Invasionen im Überblick." />
 
 	<!-- CSS Styles -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -85,18 +47,14 @@ $twTokenAPI = json_decode(file_get_contents($twTokenURL, false, stream_context_c
 						US Realms
 					</div>
 					
-					<?php 
-						$usTokenRefreshDate = date("d.m.Y", $usTokenAPI["last_updated"]);
-						$usTokenRefreshTime = date("H:i", $usTokenAPI["last_updated"]);
-					?>
 					<div class="wow-token">
 						<div class="pull-left">
 							<img src="img/token_icon.png" style="width: 50px;" />
 						</div>
 						
 						<div class="pull-left" style="width: calc(100% - 50px);">
-							<?php echo floatval(@(number_format($usTokenAPI["price"] / 100 / 100, 0, ',','.'))); ?> Gold<br>
-							Letztes Update: <?php echo $usTokenRefreshDate." ".$usTokenRefreshTime; ?>
+							<span id="token_us_price">0</span> Gold<br>
+							Letztes Update: <span id="token_us_time">00.00.0000 00:00</span>
 						</div>
 						
 						<div class="clearfix"></div>
@@ -184,18 +142,14 @@ $twTokenAPI = json_decode(file_get_contents($twTokenURL, false, stream_context_c
 						EU Realms
 					</div>
 					
-					<?php 
-						$euTokenRefreshDate = date("d.m.Y", $euTokenAPI["last_updated"]);
-						$euTokenRefreshTime = date("H:i", $euTokenAPI["last_updated"]);
-					?>
 					<div class="wow-token">
 						<div class="pull-left">
 							<img src="img/token_icon.png" style="width: 50px;" />
 						</div>
 						
 						<div class="pull-left" style="width: calc(100% - 50px);">
-							<?php echo floatval(@(number_format($euTokenAPI["price"] / 100 / 100, 0, ',','.'))); ?> Gold<br>
-							Letztes Update: <?php echo $euTokenRefreshDate." ".$euTokenRefreshTime; ?>
+							<span id="token_eu_price">0</span> Gold<br>
+							Letztes Update: <span id="token_eu_time">00.00.0000 00:00</span>
 						</div>
 						
 						<div class="clearfix"></div>
@@ -283,55 +237,40 @@ $twTokenAPI = json_decode(file_get_contents($twTokenURL, false, stream_context_c
 						OZEAN Realms
 					</div>
 					
-					
-					<?php 
-						$cnTokenRefreshDate = date("d.m.Y", $cnTokenAPI["CN"]["timestamp"]);
-						$cnTokenRefreshTime = date("H:i", $cnTokenAPI["CN"]["timestamp"]);
-					?>
 					<div class="wow-token">
 						<div class="pull-left">
 							<img src="img/token_icon.png" style="width: 50px;" />
 						</div>
 						
 						<div class="pull-left" style="width: calc(100% - 50px);">
-							China: <?php echo floatval(@(number_format($cnTokenAPI["CN"]["raw"]["buy"], 0, ',','.'))); ?> Gold<br>
-							Letztes Update: <?php echo $cnTokenRefreshDate." ".$cnTokenRefreshTime; ?>
+							China: <span id="token_cn_price">0</span> Gold<br>
+							Letztes Update: <span id="token_cn_time">00.00.0000 00:00</span>
 						</div>
 						
 						<div class="clearfix"></div>
 					</div>
 					
-					
-					<?php 
-						$krTokenRefreshDate = date("d.m.Y", $krTokenAPI["last_updated"]);
-						$krTokenRefreshTime = date("H:i", $krTokenAPI["last_updated"]);
-					?>
 					<div class="wow-token" id="kr-tokens" style="display: none;">
 						<div class="pull-left">
 							<img src="img/token_icon.png" style="width: 50px;" />
 						</div>
 						
 						<div class="pull-left" style="width: calc(100% - 50px);">
-							Korea: <?php echo floatval(@(number_format($krTokenAPI["price"] / 100 / 100, 0, ',','.'))); ?> Gold<br>
-							Letztes Update: <?php echo $krTokenRefreshDate." ".$krTokenRefreshTime; ?>
+							Korea: <span id="token_kr_price">0</span> Gold<br>
+							Letztes Update: <span id="token_kr_time">00.00.0000 00:00</span>
 						</div>
 						
 						<div class="clearfix"></div>
 					</div>
 					
-					
-					<?php 
-						$twTokenRefreshDate = date("d.m.Y", $twTokenAPI["last_updated"]);
-						$twTokenRefreshTime = date("H:i", $twTokenAPI["last_updated"]);
-					?>
 					<div class="wow-token" id="tw-tokens" style="display: none;">
 						<div class="pull-left">
 							<img src="img/token_icon.png" style="width: 50px;" />
 						</div>
 						
 						<div class="pull-left" style="width: calc(100% - 50px);">
-							Taiwan: <?php echo floatval(@(number_format($twTokenAPI["price"] / 100 / 100, 0, ',','.'))); ?> Gold<br>
-							Letztes Update: <?php echo $twTokenRefreshDate." ".$twTokenRefreshTime; ?>
+							Taiwan: <span id="token_tw_price">0</span> Gold<br>
+							Letztes Update: <span id="token_tw_time">00.00.0000 00:00</span>
 						</div>
 						
 						<div class="clearfix"></div>

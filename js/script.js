@@ -52,6 +52,32 @@ jQuery(document).ready(function($){
 		getRealmData("ozean");
 	}, 1000);
 	
+	
+	getTokenPrice();
+	
+	setInterval(function(){
+		getTokenPrice();
+	}, 10000);
+	
+	function getTokenPrice(){
+		$.get( "api/token/", function( data ) {
+			$("#token_us_price").html(data.token[0].price);
+			$("#token_us_time").html(data.token[0].last_updated);
+			
+			$("#token_eu_price").html(data.token[1].price);
+			$("#token_eu_time").html(data.token[1].last_updated);
+			
+			$("#token_cn_price").html(data.token[2].price);
+			$("#token_cn_time").html(data.token[2].last_updated);
+			
+			$("#token_kr_price").html(data.token[3].price);
+			$("#token_kr_time").html(data.token[3].last_updated);
+			
+			$("#token_tw_price").html(data.token[4].price);
+			$("#token_tw_time").html(data.token[4].last_updated);
+		});
+	}
+	
 	function getRealmRequest(realm){
 		$.get( "api/invasion/" + realm, function( data ) {
 			if(data.invasions[0].active == true){
